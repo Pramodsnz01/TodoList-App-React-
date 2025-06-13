@@ -1,8 +1,40 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar'
 import './App.css'
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
+
+  const [todo, setTodo] = useState(" ");
+  const [todos, setTodos] = useState([]);
+
+  const handleAdd = () => {
+    setTodos([...todos, { id: uuidv4(), todo, isCompleted: false }]);
+    setTodo(""); // Clear the input field after adding
+  }
+  const handleChange = (e) => {
+    setTodo(e.target.value); // Clear the input field after adding
+  }
+  const handleCheckbox = (e) => {
+    let id = e.target.name
+    let index = todos.findIndex(item => {
+      return item.id === id;
+    });
+    let newTodos = [...todos];
+    newTodos[index].isCompleted = !newTodos[index].isCompleted;
+    setTodos(newTodos);
+  }
+
+  const handleEdit = () => {
+    // Logic for editing a todo
+    console.log("Edit button clicked");
+  }
+  const handleDelete = (e, id) => {
+    let newTodos = todos.filter(item => {
+      return item.id !== id;
+    });
+    setTodos(newTodos);
+  }
 
   return (
     <>
@@ -10,19 +42,27 @@ function App() {
       <div className='contatiner mx-8 my-5 rounded-xl p-5 bg-violet-200 min-h-[80vh]'>
         <div className="addTodo my-5">
           <h2 className="text-lg font-bold">Add a Todo</h2>
-          <input type="text" className='w-1/2 bg-white' />
-          <button className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-6'>Add</button>
+          <input onChange={handleChange} value={todo} type="text" className='w-1/2 bg-white' />
+          <button onClick={handleAdd} className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-6'>Add</button>
         </div>
         <h2 className='text-lg font-bold'>Your Todos</h2>
         <div className="todos ">
-          <div className="todo flex">
-            <div className="text">Lorem ipsum dolor sit amet consectetur adipisicing.</div>
-            <div className="buttons">
-              <button className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'>Edit</button>
-              <button className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'>Delete</button>
-            </div>
+          {todos.length === 0 && <div className='m-5 text-gray-500'>No todos added yet!</div>}
+          {todos.map(item => {
 
-          </div>
+            return <div key={item.id} className="todo flex w-1/4 my-3 justify-between">
+              <div className="flex gap-5">
+
+                <input name={item.id} onChange={handleCheckbox} type="checkbox" value={item.isCompleted} />
+                <div className={item.isCompleted ? "line-through" : ""}>{item.todo}</div>
+              </div>
+              <div className="buttons">
+                <button onClick={handleEdit} className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'>Edit</button>
+                <button onClick={(e) => { handleDelete(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'>Delete</button>
+              </div>
+
+            </div>
+          })}
         </div>
       </div>
     </>
