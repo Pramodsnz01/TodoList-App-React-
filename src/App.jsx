@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import './App.css'
 import { v4 as uuidv4 } from 'uuid';
@@ -8,9 +8,25 @@ function App() {
   const [todo, setTodo] = useState(" ");
   const [todos, setTodos] = useState([]);
 
+  useEffect(() => {
+    let todoString = localStorage.getItem("todos");
+    if(todoString){
+      let todos = JSON.parse(localStorage.getItem("todos"));
+      setTodos(todos)
+
+    }
+  }, [ ])
+  
+
+  const saveToLS = (params) => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
+  
+
   const handleAdd = () => {
     setTodos([...todos, { id: uuidv4(), todo, isCompleted: false }]);
     setTodo(""); // Clear the input field after adding
+    saveToLS();
   }
   const handleChange = (e) => {
     setTodo(e.target.value); // Clear the input field after adding
@@ -23,6 +39,7 @@ function App() {
     let newTodos = [...todos];
     newTodos[index].isCompleted = !newTodos[index].isCompleted;
     setTodos(newTodos);
+    saveToLS();
   }
 
   const handleEdit = (e, id) => { 
@@ -32,14 +49,15 @@ function App() {
     let newTodos = todos.filter(item => {
       return item.id !== id;
     });
-    setTodos(newTodos);``
-
+    setTodos(newTodos);
+    saveToLS();
   }
   const handleDelete = (e, id) => {
     let newTodos = todos.filter(item => {
       return item.id !== id;
     });
     setTodos(newTodos);
+    saveToLS();
   }
 
   return (
@@ -62,7 +80,7 @@ function App() {
                 <input name={item.id} onChange={handleCheckbox} type="checkbox" value={item.isCompleted} />
                 <div className={item.isCompleted ? "line-through" : ""}>{item.todo}</div>
               </div>
-              <div className="buttons">
+              <div className="buttons flex h-full">
                 <button onClick={(e) => { handleEdit(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'>Edit</button>
                 <button onClick={(e) => { handleDelete(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'>Delete</button>
               </div>
