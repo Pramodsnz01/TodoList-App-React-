@@ -1,12 +1,30 @@
-# React + Vite
+# React Todo App with Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple and minimal **Todo List App** built with **React**, **Vite**, and **Tailwind CSS**. It supports adding, editing, deleting, and marking todos as completed. Data is persisted using **localStorage**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔧 Tech Stack
 
-## Expanding the ESLint configuration
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [uuid](https://www.npmjs.com/package/uuid) for unique todo IDs
+- [react-icons](https://react-icons.github.io/react-icons/) for icons
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Features
+
+- ✅ Add todos
+- 📝 Edit existing todos
+- ❌ Delete todos
+- ✅✔️ Mark as completed
+- 🔄 Show/hide finished todos
+- 💾 Data saved in localStorage
+- ⌨️ Press **Enter** to save a todo
+
+---
+
+## 📁 File Structure
+
