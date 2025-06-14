@@ -2,14 +2,18 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <nav className='flex justify-around  bg-indigo-900 p-4 text-white py-2'>
-      <div className="logo">
-        <span className='font-bold text-xl mx-8'>iTask</span>
+    <nav className="relative text-white py-4 px-6 overflow-hidden">
+      {/* Full background image */}
+      <img
+        src="./bg.png"
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover opacity-100 z-0"
+      />
+
+      {/* Foreground content */}
+      <div className="relative z-10 flex items-center justify-center"> 
+        <span className="font-bold text-xl mx-8">Manage Your Todos At One Place</span>
       </div>
-      <ul className="flex gap-8 mx-9">
-        <li className='cursior-pointer hover:font-bold transition-all'>Home</li>
-        <li className='cursior-pointer hover:font-bold transition-all'>Your Tasks</li>
-      </ul>
     </nav>
   )
 }
