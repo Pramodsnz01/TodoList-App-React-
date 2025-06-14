@@ -72,20 +72,23 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className='contatiner mx-auto my-5 rounded-xl p-5 bg-violet-200 min-h-[80vh] w-1/2'>
-      <h1 className="font-bold text-center text-xl">Manage your todos at one place</h1>
+      <div className='md:contatiner md:mx-auto my-5 rounded-xl p-5 bg-violet-200 min-h-[80vh] md:w-1/2'>
+      <h1 className="font-bold text-center text-3xl">Manage your todos at one place</h1>
         <div className="addTodo my-5 flex flex-col gap-4">
-          <h2 className="text-lg font-bold">Add a Todo</h2>
+          <h2 className="text-xl font-bold">Add a Todo</h2>
+          <div className="flex">
           <input onChange={handleChange} value={todo} type="text" className='w-full bg-white rounded-full px-5 py-1' />
-          <button onClick={handleAdd} disabled={todo.length<=3} className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md disabled:bg-violet-500'>Save</button>
+          <button onClick={handleAdd} disabled={todo.length<=3} className='bg-violet-800 mx-2 hover:bg-violet-950 p-4 py-2 text-sm font-bold text-white rounded-full disabled:bg-violet-500'>Save</button>
+          </div>
         </div>
         <input className='my-4' onChange={toggleFinished} type="checkbox" checked={showFinished} /> Show Finished Todos
-        <h2 className='text-lg font-bold'>Your Todos</h2>
+        <div className="h-[1px] bg-black opacity-30 w-[90%] mx-auto my-3"></div>
+        <h2 className='text-xl font-bold'>Your Todos</h2>
         <div className="todos ">
           {todos.length === 0 && <div className='m-5 text-gray-500'>No todos added yet!</div>}
           {todos.map(item => {
 
-            return (showFinished || !item.isCompleted) && <div key={item.id} className="todo flex w-1/2 my-3 justify-between">
+            return (showFinished || !item.isCompleted) && <div key={item.id} className="todo flex my-3 justify-between">
               <div className="flex gap-5">
 
                 <input name={item.id} onChange={handleCheckbox} type="checkbox" checked={item.isCompleted} />
