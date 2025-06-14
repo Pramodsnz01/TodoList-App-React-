@@ -28,3 +28,9 @@ This is a simple and minimal **Todo List App** built with **React**, **Vite**, a
 
 ## 📁 File Structure
 
+src/
+├── components/
+│ └── Navbar.jsx
+├── App.jsx
+├── main.jsx
+├── index.css
