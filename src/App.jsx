@@ -13,18 +13,18 @@ function App() {
 
   useEffect(() => {
     let todoString = localStorage.getItem("todos");
-    if(todoString){
+    if (todoString) {
       let todos = JSON.parse(localStorage.getItem("todos"));
       setTodos(todos)
 
     }
-  }, [ ])
-  
+  }, [])
+
 
   const saveToLS = (params) => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }
-  
+
 
   const handleAdd = () => {
     setTodos([...todos, { id: uuidv4(), todo, isCompleted: false }]);
@@ -38,7 +38,7 @@ function App() {
   const toggleFinished = (e) => {
     setshowFinished(!showFinished);
   }
-  
+
 
   const handleCheckbox = (e) => {
     let id = e.target.name
@@ -51,8 +51,8 @@ function App() {
     saveToLS();
   }
 
-  const handleEdit = (e, id) => { 
-    let t = todos.filter(i=>i.id===id)
+  const handleEdit = (e, id) => {
+    let t = todos.filter(i => i.id === id)
     setTodo(t[0].todo)
 
     let newTodos = todos.filter(item => {
@@ -72,12 +72,23 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className='md:contatiner md:mx-auto my-5 rounded-xl p-5 bg-violet-200 min-h-[80vh] md:w-1/2'> 
+      <div className='md:contatiner md:mx-auto my-5 rounded-xl p-5 bg-violet-200 min-h-[80vh] md:w-1/2'>
         <div className="addTodo my-5 flex flex-col gap-4">
           <h2 className="text-xl font-bold">Add a Todo</h2>
           <div className="flex">
-          <input onChange={handleChange} value={todo} type="text" className='w-full bg-white rounded-full px-5 py-1' />
-          <button onClick={handleAdd} disabled={todo.length<=3} className='bg-violet-800 mx-2 hover:bg-violet-950 p-4 py-2 text-sm font-bold text-white rounded-full disabled:bg-violet-500'>Save</button>
+            <input
+              onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && todo.length > 3) {
+                  handleAdd();
+                }
+              }}
+              value={todo}
+              type="text"
+              className='w-full bg-white rounded-full px-5 py-1'
+            />
+
+            <button onClick={handleAdd} disabled={todo.length <= 3} className='bg-violet-800 mx-2 hover:bg-violet-950 p-4 py-2 text-sm font-bold text-white rounded-full disabled:bg-violet-500'>Save</button>
           </div>
         </div>
         <input className='my-4' onChange={toggleFinished} type="checkbox" checked={showFinished} /> Show Finished Todos
