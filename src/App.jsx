@@ -4,6 +4,8 @@ import './App.css'
 import { v4 as uuidv4 } from 'uuid';
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
+import { PiPushPinDuotone, PiPushPinFill } from "react-icons/pi";
+
 
 function App() {
 
@@ -27,16 +29,25 @@ function App() {
 
 
   const handleAdd = () => {
-    setTodos([...todos, { id: uuidv4(), todo, isCompleted: false }]);
+    setTodos([...todos, { id: uuidv4(), todo, isCompleted: false, isPinned: false }]);
     setTodo(""); // Clear the input field after adding
     saveToLS();
   }
+
   const handleChange = (e) => {
     setTodo(e.target.value); // Clear the input field after adding
   }
 
   const toggleFinished = (e) => {
     setshowFinished(!showFinished);
+  }
+
+  const pinTodo = (e, id) => {
+    let index = todos.findIndex(item => item.id === id);
+    let newTodos = [...todos];
+    newTodos[index].isPinned = !newTodos[index].isPinned;
+    setTodos(newTodos);
+    saveToLS();
   }
 
 
@@ -96,8 +107,7 @@ function App() {
         <h2 className='text-xl font-bold'>Your Todos</h2>
         <div className="todos ">
           {todos.length === 0 && <div className='m-5 text-gray-500'>No todos added yet!</div>}
-          {todos.map(item => {
-
+          {todos.sort((a, b) => (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0)).map(item => {
             return (showFinished || !item.isCompleted) && <div key={item.id} className="todo flex my-3 justify-between">
               <div className="flex gap-5">
 
@@ -107,6 +117,10 @@ function App() {
               <div className="buttons flex h-full">
                 <button onClick={(e) => { handleEdit(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'><FaEdit /></button>
                 <button onClick={(e) => { handleDelete(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'><MdDelete /></button>
+                <button onClick={(e) => pinTodo(e, item.id)} className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'>
+                  {item.isPinned ? <PiPushPinFill /> : <PiPushPinDuotone />}
+                </button>
+
               </div>
 
             </div>
